@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from flask import Flask, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 from config.db import init_db
@@ -6,7 +6,7 @@ from config.settings import Config
 from routes.auth_routes import auth_bp
 from routes.progress_routes import progress_bp
 import os
-=======
+
 """
 app.py
 ──────
@@ -36,7 +36,6 @@ from config.settings import Config
 from extensions import mail
 from routes.auth_routes import auth_bp
 from routes.progress_routes import progress_bp
->>>>>>> 1aec990 (Your descriptive commit message)
 
 
 def create_app():
@@ -47,7 +46,7 @@ def create_app():
     )
     app.config.from_object(Config)
 
-<<<<<<< HEAD
+
     CORS(app)
     init_db()
 
@@ -56,7 +55,7 @@ def create_app():
     app.register_blueprint(progress_bp)
 
     # ── Frontend routes ──────────────────────────────────────
-=======
+
     # ── Phase 4: ensure upload directory exists ───────────────────────────────
     os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
@@ -70,7 +69,7 @@ def create_app():
     app.register_blueprint(progress_bp)
 
     # ── Frontend routes ───────────────────────────────────────────────────────
->>>>>>> 1aec990 (Your descriptive commit message)
+
     @app.get("/")
     def index():
         return render_template("index.html")
@@ -91,7 +90,6 @@ def create_app():
     def public_page():
         return render_template("public.html")
 
-<<<<<<< HEAD
     # ── Error handlers ───────────────────────────────────────
     @app.errorhandler(404)
     def not_found(e):
@@ -99,28 +97,26 @@ def create_app():
         if "/api/" in str(e):
             return jsonify({"error": "Route not found"}), 404
         return render_template("index.html"), 404   # SPA fallback
-=======
+
     # ── Error handlers ────────────────────────────────────────────────────────
     @app.errorhandler(404)
     def not_found(e):
         if "/api/" in str(e):
             return jsonify({"error": "Route not found"}), 404
         return render_template("index.html"), 404
->>>>>>> 1aec990 (Your descriptive commit message)
+
 
     @app.errorhandler(500)
     def server_error(e):
         return jsonify({"error": "Internal server error"}), 500
 
-<<<<<<< HEAD
-=======
     # Phase 4: clean JSON response when an upload exceeds MAX_CONTENT_LENGTH
     @app.errorhandler(413)
     def request_too_large(e):
         max_mb = app.config["MAX_CONTENT_LENGTH"] // (1024 * 1024)
         return jsonify({"error": f"File too large. Maximum size is {max_mb} MB."}), 413
 
->>>>>>> 1aec990 (Your descriptive commit message)
+
     return app
 
 
