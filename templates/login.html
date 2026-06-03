@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1aec990 (Your descriptive commit message)
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h2>Welcome Back</h2>
+<<<<<<< HEAD
+    <div class="alert success" id="ok"></div>
+    <div class="alert error" id="err"></div>
+=======
+
+    <!-- Success banner: shown after e-mail is verified (redirect from email_verified.html) -->
+    <div class="alert success" id="ok"></div>
+
+    <!-- Phase 1: amber warning for unverified-email 403 — visually distinct from red errors -->
+    <div class="alert" id="warn"
+         style="display:none; background:#fffbeb; color:#92400e;
+                border:1px solid #fde68a; border-radius:8px;
+                padding:.7rem 1rem; font-size:.9rem; margin-bottom:1rem;"></div>
+
+    <!-- Error banner: wrong password / server errors -->
+    <div class="alert error" id="err"></div>
+
+>>>>>>> 1aec990 (Your descriptive commit message)
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="you@example.com" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Your password" />
+    </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1aec990 (Your descriptive commit message)
+    <button class="btn" onclick="doLogin()">Login</button>
+    <p class="form-footer">No account? <a href="/signup">Sign Up</a></p>
+  </div>
+</div>
+{% endblock %}
+<<<<<<< HEAD
+{% block scripts %}
+<script>
+  const params = new URLSearchParams(location.search);
+  if (params.get("registered")) {
+    const ok = document.getElementById("ok");
+    ok.textContent = "Account created! Please login.";
+    ok.style.display = "block";
+  }
+  if (getUser()) window.location.href = "/dashboard";
+
+  async function doLogin() {
+    const err = document.getElementById("err");
+    err.style.display = "none";
+    try {
+      const data = await api.login({
+        email: document.getElementById("email").value,
+=======
+
+{% block scripts %}
+<script>
+  /* ── Query-param banners ────────────────────────────────────────────────── */
+  const params = new URLSearchParams(location.search);
+
+  // ?registered=1  — legacy param kept for safety (was used before Phase 1)
+  if (params.get("registered")) {
+    const ok = document.getElementById("ok");
+    // Updated message: reflects that verification is now required first
+    ok.textContent = "Account created! Please verify your email before logging in.";
+    ok.style.display = "block";
+  }
+
+  // ?verified=1 — set by email_verified.html's "Go to Login" button (Phase 1)
+  if (params.get("verified")) {
+    const ok = document.getElementById("ok");
+    ok.textContent = "✅ Email verified! You can now log in.";
+    ok.style.display = "block";
+  }
+
+  if (getUser()) window.location.href = "/dashboard";
+
+  /* ── Login handler ──────────────────────────────────────────────────────── */
+  async function doLogin() {
+    const err  = document.getElementById("err");
+    const warn = document.getElementById("warn");
+
+    // Reset both banners before each attempt
+    err.style.display  = "none";
+    warn.style.display = "none";
+
+    try {
+      const data = await api.login({
+        email:    document.getElementById("email").value,
+>>>>>>> 1aec990 (Your descriptive commit message)
+        password: document.getElementById("password").value,
+      });
+      setToken(data.token);
+      setUser(data.user);
+      window.location.href = "/dashboard";
+<<<<<<< HEAD
+    } catch(e) {
+      err.textContent = e.message;
+      err.style.display = "block";
+    }
+  }
+  document.addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
+=======
+
+    } catch (e) {
+      if (e.status === 403) {
+        /*
+         * Phase 1 — unverified email barrier.
+         * Show a distinct amber warning (not a red error) so the user
+         * understands this is an action they need to take, not a mistake.
+         */
+        warn.innerHTML =
+          "✉️ <strong>Email not verified.</strong> " +
+          "Please check your inbox and click the verification link. " +
+          "Didn't get it? <a href='/signup' style='color:#92400e;font-weight:600;'>Sign up again</a> to resend.";
+        warn.style.display = "block";
+      } else {
+        // 401 wrong credentials or any other error
+        err.textContent = e.message;
+        err.style.display = "block";
+      }
+    }
+  }
+
+  document.addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+>>>>>>> 1aec990 (Your descriptive commit message)
+</script>
+{% endblock %}

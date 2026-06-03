@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Email Verification – Progress Tracker{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-card" style="text-align: center; max-width: 460px;">
+
+    {% if success %}
+      <!-- ── Success state ───────────────────────────────────────────────── -->
+      <div style="font-size: 56px; margin-bottom: 12px;">✅</div>
+      <h2 style="color: var(--success); margin-bottom: 16px;">Email Verified!</h2>
+      <div class="alert success" style="display: block; margin-bottom: 24px;">
+        {{ message }}
+      </div>
+      <!-- ?verified=1 tells login.html to show the "Email verified!" success banner -->
+      <a href="/login?verified=1" class="btn" style="text-decoration: none; display: block;">
+        Go to Login
+      </a>
+
+    {% else %}
+      <!-- ── Failure state ───────────────────────────────────────────────── -->
+      <div style="font-size: 56px; margin-bottom: 12px;">❌</div>
+      <h2 style="color: var(--danger); margin-bottom: 16px;">Verification Failed</h2>
+      <div class="alert error" style="display: block; margin-bottom: 24px;">
+        {{ message }}
+      </div>
+      <a href="/signup" class="btn" style="text-decoration: none; display: block;">
+        Back to Sign Up
+      </a>
+
+    {% endif %}
+
+    <p class="form-footer" style="margin-top: 16px;">
+      Need help? <a href="mailto:support@progresstracker.com">Contact Support</a>
+    </p>
+
+  </div>
+</div>
+{% endblock %}

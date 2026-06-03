@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-container">
+  <div class="page-header">
+    <h2>My Progress</h2>
+    <button class="btn-sm" onclick="openModal()">+ New</button>
+  </div>
+  <div id="cards" class="cards-grid"><p class="loading">Loading…</p></div>
+</div>
+
+<!-- Create / Edit Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">New Progress</h3>
+    <input type="hidden" id="edit-id" />
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" id="f-title" placeholder="e.g. Learn Python" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="f-desc" placeholder="Optional details…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="f-status">
+        <option value="not_started">Not Started</option>
+        <option value="in_progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+    <div class="alert error" id="modal-err"></div>
+    <div class="modal-actions">
+      <button class="save" onclick="saveProgress()">Save</button>
+      <button class="cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  if (!getUser()) window.location.href = "/login";
+
+  async function load() {
+    const container = document.getElementById("cards");
+    try {
+      const items = await api.getMyProgress();
+      if (!items.length) { container.innerHTML = '<p class="empty">No progress yet. Add your first goal!</p>'; return; }
+      container.innerHTML = items.map(card).join("");
+    } catch(e) {
+      if (e.message.includes("expired") || e.message.includes("Invalid")) {
+        clearToken(); window.location.href = "/login";
+      }
+      container.innerHTML = `<p class="empty">${e.message}</p>`;
+    }
+  }
+
+  function card(p) {
+    const label = { not_started: "Not Started", in_progress: "In Progress", completed: "Completed" };
+    return `<div class="card ${p.progress_status}">
+      <div class="card-title">${esc(p.title)}</div>
+      <div class="card-desc">${esc(p.description || "")}</div>
+      <div class="card-meta">
+        <span class="badge ${p.progress_status}">${label[p.progress_status]}</span>
+        <div class="card-actions">
+          <button onclick='openEdit(${JSON.stringify(p)})'>✏️ Edit</button>
+          <button class="del" onclick="del('${p.id}')">🗑 Delete</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  function openModal(title="New Progress") {
+    document.getElementById("modal-title").textContent = title;
+    document.getElementById("edit-id").value = "";
+    document.getElementById("f-title").value = "";
+    document.getElementById("f-desc").value = "";
+    document.getElementById("f-status").value = "not_started";
+    document.getElementById("modal-err").style.display = "none";
+    document.getElementById("modal").classList.add("open");
+  }
+
+  function openEdit(p) {
+    openModal("Edit Progress");
+    document.getElementById("edit-id").value = p.id;
+    document.getElementById("f-title").value = p.title;
+    document.getElementById("f-desc").value = p.description || "";
+    document.getElementById("f-status").value = p.progress_status;
+  }
+
+  function closeModal() { document.getElementById("modal").classList.remove("open"); }
+
+  async function saveProgress() {
+    const id = document.getElementById("edit-id").value;
+    const body = {
+      title: document.getElementById("f-title").value.trim(),
+      description: document.getElementById("f-desc").value.trim(),
+      progress_status: document.getElementById("f-status").value,
+    };
+    const errEl = document.getElementById("modal-err");
+    errEl.style.display = "none";
+    if (!body.title) { errEl.textContent = "Title is required"; errEl.style.display = "block"; return; }
+    try {
+      id ? await api.updateProgress(id, body) : await api.createProgress(body);
+      closeModal(); load();
+    } catch(e) { errEl.textContent = e.message; errEl.style.display = "block"; }
+  }
+
+  async function del(id) {
+    if (!confirm("Delete this progress?")) return;
+    await api.deleteProgress(id); load();
+  }
+
+  load();
+</script>
+{% endblock %}

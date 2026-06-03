@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Public Feed{% endblock %}
+{% block content %}
+<div class="public-header">
+  <h2>🌍 Public Progress Feed</h2>
+  <p>See what everyone is working towards</p>
+</div>
+<div class="page-container">
+  <div id="cards" class="cards-grid"><p class="loading">Loading…</p></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  async function load() {
+    const container = document.getElementById("cards");
+    try {
+      const items = await api.getPublicProgress();
+      if (!items.length) { container.innerHTML = '<p class="empty">No public progress yet.</p>'; return; }
+      container.innerHTML = items.map(card).join("");
+    } catch(e) { container.innerHTML = `<p class="empty">${e.message}</p>`; }
+  }
+
+  function card(p) {
+    const label = { not_started: "Not Started", in_progress: "In Progress", completed: "Completed" };
+    const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    return `<div class="card ${p.progress_status}">
+      <div class="card-title">${esc(p.title)}</div>
+      <div class="card-desc">${esc(p.description || "")}</div>
+      <div class="card-meta">
+        <span class="badge ${p.progress_status}">${label[p.progress_status]}</span>
+      </div>
+      <div class="card-author">by ${esc(p.created_by?.name || "Unknown")}</div>
+    </div>`;
+  }
+
+  load();
+</script>
+{% endblock %}

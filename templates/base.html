@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Progress Tracker{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="/" class="brand">⚡ ProgressTracker</a>
+  <div class="nav-links" id="nav-links">
+    <a href="/public">Public Feed</a>
+    <span id="nav-auth"></span>
+  </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<script src="/static/js/api.js"></script>
+<script>
+  // Render nav auth links
+  const user = getUser();
+  const navAuth = document.getElementById("nav-auth");
+  if (user) {
+    navAuth.innerHTML = `<a href="/dashboard">Dashboard</a>
+      <button onclick="logout()">Logout</button>`;
+  } else {
+    navAuth.innerHTML = `<a href="/login">Login</a><a href="/signup">Sign Up</a>`;
+  }
+  function logout() { clearToken(); window.location.href = "/"; }
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

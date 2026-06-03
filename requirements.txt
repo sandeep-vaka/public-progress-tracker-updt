@@ -1,0 +1,21 @@
+Flask==3.0.3
+mongoengine>=0.29.1
+pymongo>=4.9
+PyJWT==2.8.0
+Werkzeug==3.0.3
+python-dotenv==1.0.1
+Flask-CORS==4.0.1
+gunicorn==22.0.0
+
+
+# Phase 1 — Email Verification
+Flask-Mail==0.10.0
+itsdangerous>=2.1.2
+
+# Phase 4 — File Uploads
+# python-magic provides MIME-type sniffing as an extra layer of validation
+# beyond extension checking.  It requires libmagic on the host:
+#   macOS  : brew install libmagic
+#   Ubuntu : sudo apt-get install libmagic1
+# Remove this line if you prefer extension-only validation (already implemented).
+python-magic==0.4.27

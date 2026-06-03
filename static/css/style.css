@@ -1,0 +1,112 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #6c63ff;
+  --primary-dark: #574fd6;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warn: #f59e0b;
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 10px;
+  --shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── NAV ── */
+nav {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+nav .brand { font-weight: 700; font-size: 1.15rem; color: var(--primary); text-decoration: none; }
+nav .nav-links a { margin-left: 1.2rem; text-decoration: none; color: var(--muted); font-size: .92rem; }
+nav .nav-links a:hover { color: var(--primary); }
+nav .nav-links button { margin-left: 1.2rem; background: none; border: none; cursor: pointer; color: var(--danger); font-size: .92rem; }
+
+/* ── HERO ── */
+.hero { text-align: center; padding: 5rem 1rem 3rem; }
+.hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: .8rem; }
+.hero p { color: var(--muted); font-size: 1.05rem; margin-bottom: 2rem; }
+.hero-buttons a { margin: .3rem; display: inline-block; padding: .7rem 1.6rem; border-radius: var(--radius); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { border: 2px solid var(--primary); color: var(--primary); }
+.btn-outline:hover { background: var(--primary); color: #fff; }
+
+/* ── AUTH FORMS ── */
+.auth-wrapper { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 60px); padding: 2rem; }
+.auth-card { background: var(--card); border-radius: var(--radius); padding: 2.5rem; width: 100%; max-width: 420px; box-shadow: var(--shadow); }
+.auth-card h2 { font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+
+/* ── FORM ELEMENTS ── */
+.form-group { margin-bottom: 1.1rem; }
+.form-group label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: .4rem; color: var(--muted); }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: .65rem .9rem; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: .95rem; outline: none; transition: border .2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.btn { display: block; width: 100%; padding: .75rem; background: var(--primary); color: #fff;
+  border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+.btn:hover { background: var(--primary-dark); }
+.btn.danger { background: var(--danger); }
+.form-footer { text-align: center; margin-top: 1rem; font-size: .88rem; color: var(--muted); }
+.form-footer a { color: var(--primary); text-decoration: none; }
+
+/* ── ALERT ── */
+.alert { padding: .7rem 1rem; border-radius: 8px; font-size: .9rem; margin-bottom: 1rem; display: none; }
+.alert.error { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; }
+.alert.success { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+/* ── DASHBOARD ── */
+.page-container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.page-header h2 { font-size: 1.5rem; }
+.btn-sm { padding: .45rem 1rem; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: .9rem; font-weight: 600; }
+.btn-sm:hover { background: var(--primary-dark); }
+
+/* ── MODAL ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: none; align-items: center; justify-content: center; z-index: 100; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--card); border-radius: var(--radius); padding: 2rem; width: 100%; max-width: 480px; box-shadow: 0 8px 30px rgba(0,0,0,.15); }
+.modal h3 { margin-bottom: 1.2rem; }
+.modal-actions { display: flex; gap: .8rem; margin-top: 1rem; }
+.modal-actions button { flex: 1; padding: .65rem; border: none; border-radius: 8px; font-size: .95rem; font-weight: 600; cursor: pointer; }
+.modal-actions .save { background: var(--primary); color: #fff; }
+.modal-actions .cancel { background: var(--border); color: var(--text); }
+
+/* ── PROGRESS CARDS ── */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.2rem; }
+.card { background: var(--card); border-radius: var(--radius); padding: 1.4rem; box-shadow: var(--shadow); border-left: 4px solid var(--border); }
+.card.not_started { border-left-color: var(--muted); }
+.card.in_progress  { border-left-color: var(--warn); }
+.card.completed    { border-left-color: var(--success); }
+.card-title { font-weight: 700; font-size: 1rem; margin-bottom: .4rem; }
+.card-desc { color: var(--muted); font-size: .88rem; margin-bottom: .8rem; min-height: 36px; }
+.card-meta { display: flex; justify-content: space-between; align-items: center; }
+.badge { font-size: .75rem; font-weight: 600; padding: .25rem .65rem; border-radius: 999px; }
+.badge.not_started { background: #f3f4f6; color: var(--muted); }
+.badge.in_progress  { background: #fef3c7; color: #b45309; }
+.badge.completed    { background: #dcfce7; color: #15803d; }
+.card-actions button { background: none; border: none; cursor: pointer; font-size: .8rem; color: var(--muted); margin-left: .5rem; }
+.card-actions button:hover { color: var(--primary); }
+.card-actions button.del:hover { color: var(--danger); }
+
+/* ── PUBLIC ── */
+.public-header { text-align: center; padding: 2.5rem 1rem 1.5rem; }
+.public-header h2 { font-size: 1.8rem; }
+.public-header p { color: var(--muted); }
+.card-author { font-size: .78rem; color: var(--muted); margin-top: .5rem; }
+.empty { text-align: center; color: var(--muted); padding: 3rem; }
+.loading { text-align: center; color: var(--muted); padding: 2rem; }
