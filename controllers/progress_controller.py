@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from flask import request, jsonify
 from datetime import datetime, timezone
 from models.progress import Progress
@@ -6,7 +6,7 @@ from models.progress import Progress
 
 def create_progress(current_user):
     data = request.get_json()
-=======
+
 """
 controllers/progress_controller.py
 ────────────────────────────────────
@@ -198,14 +198,14 @@ def create_progress(current_user):
         return jsonify({"error": "title is required"}), 400
 
     progress = Progress(
-<<<<<<< HEAD
+
         title=title,
         description=data.get("description", ""),
         progress_status=data.get("progress_status", "not_started"),
         created_by=current_user,
     ).save()
 
-=======
+
         title           = title,
         description     = data.get("description", ""),
         progress_status = data.get("progress_status", "not_started"),
@@ -219,18 +219,18 @@ def create_progress(current_user):
         return jsonify({"error": str(exc)}), 400
 
     progress.save()
->>>>>>> 1aec990 (Your descriptive commit message)
+
     return jsonify({"message": "Progress created", "progress": progress.to_dict()}), 201
 
 
 def get_my_progress(current_user):
-<<<<<<< HEAD
+
     items = Progress.objects(created_by=current_user)
     return jsonify([p.to_dict() for p in items]), 200
 
 
 def update_progress(current_user, progress_id):
-=======
+
     """
     GET /api/progress/
     Returns the authenticated user's progress items, optionally filtered.
@@ -263,7 +263,7 @@ def update_progress(current_user, progress_id):
     if not progress:
         return jsonify({"error": "Not found or unauthorized"}), 404
 
-<<<<<<< HEAD
+
     data = request.get_json()
     progress.title = data.get("title", progress.title)
     progress.description = data.get("description", progress.description)
@@ -271,7 +271,7 @@ def update_progress(current_user, progress_id):
     progress.updated_at = datetime.now(timezone.utc)
     progress.save()
 
-=======
+
     # Support both JSON and multipart/form-data
     if request.content_type and "multipart/form-data" in request.content_type:
         data = request.form
@@ -290,39 +290,39 @@ def update_progress(current_user, progress_id):
         return jsonify({"error": str(exc)}), 400
 
     progress.save()
->>>>>>> 1aec990 (Your descriptive commit message)
+
     return jsonify({"message": "Updated", "progress": progress.to_dict()}), 200
 
 
 def delete_progress(current_user, progress_id):
-<<<<<<< HEAD
-=======
+
+
     """
     DELETE /api/progress/<progress_id>
 
     Phase 4: also removes the associated file from disk when present.
     """
->>>>>>> 1aec990 (Your descriptive commit message)
+
     progress = Progress.objects(id=progress_id, created_by=current_user).first()
     if not progress:
         return jsonify({"error": "Not found or unauthorized"}), 404
 
-<<<<<<< HEAD
-=======
+
+
     # Phase 4: clean up the stored file before deleting the document
     delete_upload(progress.file_url)
 
->>>>>>> 1aec990 (Your descriptive commit message)
+
     progress.delete()
     return jsonify({"message": "Deleted"}), 200
 
 
-<<<<<<< HEAD
+
 # Public endpoint — no auth
 def get_all_progress():
     items = Progress.objects().order_by("-created_at")
     return jsonify([p.to_dict() for p in items]), 200
-=======
+
 def get_all_progress():
     """
     GET /api/progress/public
@@ -361,4 +361,4 @@ def serve_file(filename):
     abs_folder = os.path.abspath(upload_folder)
 
     return send_from_directory(abs_folder, filename, as_attachment=False)
->>>>>>> 1aec990 (Your descriptive commit message)
+

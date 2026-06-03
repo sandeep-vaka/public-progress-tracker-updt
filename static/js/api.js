@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 const API_BASE = "/api";
 
 function getToken() { return localStorage.getItem("token"); }
@@ -7,7 +7,7 @@ function clearToken() { localStorage.removeItem("token"); localStorage.removeIte
 function getUser() { return JSON.parse(localStorage.getItem("user") || "null"); }
 function setUser(u) { localStorage.setItem("user", JSON.stringify(u)); }
 
-=======
+
 /**
  * api.js
  * ──────
@@ -44,13 +44,13 @@ class ApiError extends Error {
 }
 
 // ── Core fetch wrapper ────────────────────────────────────────────────────────
->>>>>>> 1aec990 (Your descriptive commit message)
+
 async function request(path, options = {}) {
   const token = getToken();
   const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-<<<<<<< HEAD
+
   const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || "Request failed");
@@ -66,7 +66,7 @@ const api = {
   updateProgress:   (id, body) => request(`/progress/${id}`, { method: "PUT", body: JSON.stringify(body) }),
   deleteProgress:   (id)   => request(`/progress/${id}`, { method: "DELETE" }),
   getPublicProgress: ()    => request("/progress/public"),
-=======
+
   const res  = await fetch(`${API_BASE}${path}`, { ...options, headers });
   const data = await res.json();
 
@@ -86,5 +86,5 @@ const api = {
   updateProgress:    (id, body) => request(`/progress/${id}`,  { method: "PUT",    body: JSON.stringify(body) }),
   deleteProgress:    (id)       => request(`/progress/${id}`,  { method: "DELETE" }),
   getPublicProgress: ()         => request("/progress/public"),
->>>>>>> 1aec990 (Your descriptive commit message)
+
 };

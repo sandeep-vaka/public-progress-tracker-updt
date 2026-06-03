@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Sign Up{% endblock %}
-<<<<<<< HEAD
 {% block content %}
 <div class="auth-wrapper">
   <div class="auth-card">
     <h2>Create Account</h2>
     <div class="alert error" id="err"></div>
-=======
 
 {% block content %}
 <div class="auth-wrapper">
@@ -16,7 +14,6 @@
     <!-- Error banner (shown on API failure) -->
     <div class="alert error" id="err"></div>
 
->>>>>>> 1aec990 (Your descriptive commit message)
     <div class="form-group">
       <label>Name</label>
       <input type="text" id="name" placeholder="Your name" />
@@ -29,17 +26,13 @@
       <label>Password</label>
       <input type="password" id="password" placeholder="Min 6 characters" />
     </div>
-<<<<<<< HEAD
     <button class="btn" onclick="doSignup()">Create Account</button>
-=======
 
     <button class="btn" id="submit-btn" onclick="doSignup()">Create Account</button>
->>>>>>> 1aec990 (Your descriptive commit message)
     <p class="form-footer">Already have an account? <a href="/login">Login</a></p>
   </div>
 </div>
 {% endblock %}
-<<<<<<< HEAD
 {% block scripts %}
 <script>
 async function doSignup() {
@@ -59,7 +52,6 @@ async function doSignup() {
   }
 }
 document.addEventListener("keydown", e => { if(e.key==="Enter") doSignup(); });
-=======
 
 {% block scripts %}
 <script>
@@ -142,6 +134,5 @@ document.addEventListener("keydown", e => { if(e.key==="Enter") doSignup(); });
   }
 
   document.addEventListener("keydown", e => { if (e.key === "Enter") doSignup(); });
->>>>>>> 1aec990 (Your descriptive commit message)
 </script>
 {% endblock %}

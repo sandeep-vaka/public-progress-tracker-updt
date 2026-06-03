@@ -1,17 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
-<<<<<<< HEAD
-=======
 
->>>>>>> 1aec990 (Your descriptive commit message)
 {% block content %}
 <div class="auth-wrapper">
   <div class="auth-card">
     <h2>Welcome Back</h2>
-<<<<<<< HEAD
+
     <div class="alert success" id="ok"></div>
     <div class="alert error" id="err"></div>
-=======
+
 
     <!-- Success banner: shown after e-mail is verified (redirect from email_verified.html) -->
     <div class="alert success" id="ok"></div>
@@ -25,7 +22,7 @@
     <!-- Error banner: wrong password / server errors -->
     <div class="alert error" id="err"></div>
 
->>>>>>> 1aec990 (Your descriptive commit message)
+
     <div class="form-group">
       <label>Email</label>
       <input type="email" id="email" placeholder="you@example.com" />
@@ -34,16 +31,13 @@
       <label>Password</label>
       <input type="password" id="password" placeholder="Your password" />
     </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 1aec990 (Your descriptive commit message)
     <button class="btn" onclick="doLogin()">Login</button>
     <p class="form-footer">No account? <a href="/signup">Sign Up</a></p>
   </div>
 </div>
 {% endblock %}
-<<<<<<< HEAD
+
 {% block scripts %}
 <script>
   const params = new URLSearchParams(location.search);
@@ -60,7 +54,7 @@
     try {
       const data = await api.login({
         email: document.getElementById("email").value,
-=======
+
 
 {% block scripts %}
 <script>
@@ -96,20 +90,20 @@
     try {
       const data = await api.login({
         email:    document.getElementById("email").value,
->>>>>>> 1aec990 (Your descriptive commit message)
+
         password: document.getElementById("password").value,
       });
       setToken(data.token);
       setUser(data.user);
       window.location.href = "/dashboard";
-<<<<<<< HEAD
+
     } catch(e) {
       err.textContent = e.message;
       err.style.display = "block";
     }
   }
   document.addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
-=======
+
 
     } catch (e) {
       if (e.status === 403) {
@@ -132,6 +126,6 @@
   }
 
   document.addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
->>>>>>> 1aec990 (Your descriptive commit message)
+
 </script>
 {% endblock %}

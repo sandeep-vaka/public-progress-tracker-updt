@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.user import User
@@ -11,7 +11,7 @@ def signup():
     data = request.get_json()
     name = data.get("name", "").strip()
     email = data.get("email", "").strip().lower()
-=======
+
 """
 controllers/auth_controller.py
 ───────────────────────────────
@@ -103,7 +103,7 @@ def signup():
     if User.objects(email=email).first():
         return jsonify({"error": "Email already registered"}), 409
 
-<<<<<<< HEAD
+
     hashed = generate_password_hash(password)
     user = User(name=name, email=email, password=hashed).save()
 
@@ -113,7 +113,7 @@ def signup():
 def login():
     data = request.get_json()
     email = data.get("email", "").strip().lower()
-=======
+
     # Hash password and persist the user (is_verified defaults to False)
     hashed = generate_password_hash(password)
     user   = User(name=name, email=email, password=hashed).save()
@@ -143,18 +143,18 @@ def login():
 def login():
     data     = request.get_json()
     email    = data.get("email",    "").strip().lower()
->>>>>>> 1aec990 (Your descriptive commit message)
+
     password = data.get("password", "")
 
     user = User.objects(email=email).first()
     if not user or not check_password_hash(user.password, password):
         return jsonify({"error": "Invalid credentials"}), 401
 
-<<<<<<< HEAD
+
     payload = {
         "user_id": str(user.id),
         "exp": datetime.now(timezone.utc) + timedelta(days=7),
-=======
+
     # Phase 1 — block unverified accounts before issuing any token
     if not user.is_verified:
         return jsonify({"message": "Please verify your email before logging in."}), 403
@@ -162,13 +162,12 @@ def login():
     payload = {
         "user_id": str(user.id),
         "exp":     datetime.now(timezone.utc) + timedelta(days=7),
->>>>>>> 1aec990 (Your descriptive commit message)
+
     }
     token = jwt.encode(payload, Config.JWT_SECRET, algorithm="HS256")
 
     return jsonify({"token": token, "user": user.to_dict()}), 200
-<<<<<<< HEAD
-=======
+
 
 
 # ── Email verification ────────────────────────────────────────────────────────
@@ -318,4 +317,4 @@ def reset_password(token):
     logger.info(f"Password successfully reset for {email}.")
 
     return jsonify({"message": "Your password has been reset successfully. You can now log in."}), 200
->>>>>>> 1aec990 (Your descriptive commit message)
+

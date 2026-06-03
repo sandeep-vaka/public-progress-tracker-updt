@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from flask import Blueprint
 from controllers.auth_controller import signup, login
 
@@ -6,7 +6,7 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 auth_bp.post("/signup")(signup)
 auth_bp.post("/login")(login)
-=======
+
 """
 routes/auth_routes.py
 ─────────────────────
@@ -53,4 +53,4 @@ auth_bp.get("/verify-email/<token>")(verify_email)
 # ── Phase 2: Password reset ───────────────────────────────────────────────────
 auth_bp.post("/forgot-password")(forgot_password)
 auth_bp.post("/reset-password/<token>")(reset_password)
->>>>>>> 1aec990 (Your descriptive commit message)
+

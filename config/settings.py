@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 """
 config/settings.py
 ──────────────────
@@ -22,18 +21,15 @@ Phase 4 additions
                          Default: 10 MB.
 """
 
->>>>>>> 1aec990 (Your descriptive commit message)
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-<<<<<<< HEAD
 class Config:
     MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/progress_tracker")
     JWT_SECRET = os.getenv("JWT_SECRET", "changeme")
     DEBUG = os.getenv("FLASK_DEBUG", "False") == "True"
-=======
 
 class Config:
     # ── Database ───────────────────────────────────────────────────────────────
@@ -70,4 +66,3 @@ class Config:
     # Flask enforces this limit before the view function runs.
     # Value is in bytes: 10 * 1024 * 1024 = 10 MB.
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", str(10 * 1024 * 1024)))
->>>>>>> 1aec990 (Your descriptive commit message)

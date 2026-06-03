@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from mongoengine import Document, StringField, DateTimeField
 from datetime import datetime, timezone
 
@@ -6,7 +6,7 @@ class User(Document):
     name = StringField(required=True, max_length=100)
     email = StringField(required=True, unique=True)
     password = StringField(required=True)
-=======
+
 """
 models/user.py
 ──────────────
@@ -32,7 +32,7 @@ class User(Document):
     # Phase 1 — set to True only after the user clicks the email verify link
     is_verified = BooleanField(default=False)
 
->>>>>>> 1aec990 (Your descriptive commit message)
+
     created_at = DateTimeField(default=lambda: datetime.now(timezone.utc))
     updated_at = DateTimeField(default=lambda: datetime.now(timezone.utc))
 
@@ -40,16 +40,16 @@ class User(Document):
 
     def to_dict(self):
         return {
-<<<<<<< HEAD
+
             "id": str(self.id),
             "name": self.name,
             "email": self.email,
             "created_at": self.created_at.isoformat(),
-=======
+
             "id":          str(self.id),
             "name":        self.name,
             "email":       self.email,
             "is_verified": self.is_verified,   # Phase 1: included in responses
             "created_at":  self.created_at.isoformat(),
->>>>>>> 1aec990 (Your descriptive commit message)
+
         }
